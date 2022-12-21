@@ -25,25 +25,19 @@ class Visualizer(object):
     def showGraphic(self):
         plt.xlabel("x label")
         plt.ylabel("u label")
-        u1 = u2 = u3 = u4 = 0
+
         for i in range(M + 1):
             if self.approximator1.tao * i == controlTime:
                 plt.plot(self.x_grid1, self.u1[i], label='step h')
-                u1 = self.u1[i]
             if self.approximator2.tao * i == controlTime:
                 plt.plot(self.x_grid2, self.u2[i], label='step h/2')
-                u2 = self.u2[i]
             if self.approximator3.tao * i == controlTime:
                 plt.plot(self.x_grid3, self.u3[i], label='step h/4')
-                u3 = self.u3[i]
             if self.approximator4.tao * i == controlTime:
                 plt.plot(self.x_grid4, self.u4[i], label='step h/8')
-                u4 = self.u4[i]
-                # plt.plot(x_grid, y, label='original func')
-
-        rungeCheck(self.approximator1, u1, u2, 'h and h / 2')
-        rungeCheck(self.approximator2, u2, u3, 'h / 2 and h / 4')
-        rungeCheck(self.approximator3, u3, u4, 'h / 4 and h / 8')
+                x_grid = DecisionInitializer.initX(int(A / 10e-4), 10e-4)
+                y = DecisionInitializer.Y(int(A / 10e-4), 10e-4, controlTime, 2)
+                plt.plot(x_grid, y, label='original func')
 
         plt.legend()
         plt.title(self.methodName + ' compare' + ' with h = {0}'.format(self.approximator1.h))
