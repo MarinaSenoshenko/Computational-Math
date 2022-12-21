@@ -18,6 +18,6 @@ class Approximator(object):
 
         for n in range(1, M + 1):
             for j in range(1, self.N + 1):
-                self.tao_cur = self.tao_cur = correctTao(self.N, n, self.u, self.h)
+                self.tao_cur = correctTao(self.N, n, self.u, self.h)
                 self.u[n][j] = self.u[n - 1][j] - (self.tao_cur / self.h)  * (f(self.u[n - 1][j]) - f(self.u[n - 1][j - 1]))
 
