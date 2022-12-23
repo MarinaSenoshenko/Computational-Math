@@ -1,4 +1,5 @@
 from common.params import *
+from order_set import setOrder
 
 
 class Approximator(object):
@@ -13,8 +14,7 @@ class Approximator(object):
 
     def count(self):
         self.u[0] = initU_0(self.N, self.h)
-        for j in range(1, M + 1):
-            self.u[j][0] = self.u[0][0]
+        setOrder(self)
 
         for n in range(1, M + 1):
             self.tridiagonalMatrixRunning(n)
@@ -36,6 +36,5 @@ class Approximator(object):
                     ksi[j] -= 0.25 * r /  (1 - 0.25 * r * ksi[j - 1])
                 nu[j] -= (-0.25 * r * nu[j - 1] - d[j]) / (1 - 0.25 * r * ksi[j - 1])
 
-        self.u[n][self.N] = nu[self.N]
-        for j in range(self.N, 1, -1):
+        for j in range(self.N - 2, 1, -1):
             self.u[n][j - 1] = (ksi[j - 1] * self.u[n][j] + nu[j - 1])
