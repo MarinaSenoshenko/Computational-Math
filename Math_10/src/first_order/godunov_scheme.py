@@ -2,6 +2,8 @@ from common.params import *
 
 class Approximator(object):
     def __init__(self, h, N, tao):
+        if r > 1:
+            raise ValueError('Incorrect r')
         self.h = h
         self.N = N
         self.tao = tao
@@ -15,6 +17,10 @@ class Approximator(object):
         for j in range(1, M + 1):
             self.u[j][0] = self.u[0][0]
 
+        for j in range(1, M + 1):
+            self.u[j][self.N] = self.u[0][self.N]
+
         for n in range(1, M + 1):
             for j in range(1, self.N + 1):
                 self.u[n][j] = r * self.u[n - 1][j - 1] + (1 - r) * self.u[n - 1][j]
+
